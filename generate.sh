@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 #######################################################
 #   
 #   文件名称：generate.sh
