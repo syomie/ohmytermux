@@ -1,0 +1,12 @@
+Package:oh-my-termux 
+Version: 0.0.1
+Architecture: aarch64
+Maintainer: syomie <lian1581@qq.com>
+Installed-Size: 60745
+Section: utils 
+Priority: optional
+Depends: 
+Replaces:
+Homepage:https://github.com/syomie/ohmytermux 
+Description: termux 配置修改包
+ 自用分享的termux配置修改包
