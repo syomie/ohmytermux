@@ -1,3 +1,9 @@
+oh-my-termux (3) unstable; urgency=medium
+
+  * Resolves #3 ,Resolves #4
+
+ -- Syomie <lian1581@qq.com>  Wed Feb 24 21:23:38 CST 2021
+
 oh-my-termux (2) unstable; urgency=medium
 
   * 利用依赖关系迅速安装zsh并配置oh-my-zsh

@@ -1,8 +1,8 @@
 Package:oh-my-termux 
-Version: 1.0.1
+Version: 1.0.2
 Architecture: aarch64
 Maintainer: syomie <lian1581@qq.com>
-Installed-Size: 6537
+Installed-Size: 10693
 Section: utils 
 Priority: optional
 Depends: git,zsh,tree,openssh,perl,vim
