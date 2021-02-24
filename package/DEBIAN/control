@@ -1,11 +1,11 @@
 Package:oh-my-termux 
-Version: 1.0.0
+Version: 1.0.1
 Architecture: aarch64
 Maintainer: syomie <lian1581@qq.com>
-Installed-Size: 58
+Installed-Size: 6537
 Section: utils 
 Priority: optional
-Depends: 
+Depends: git,zsh,tree,openssh,perl,vim
 Replaces:
 Homepage:https://github.com/syomie/ohmytermux 
 Description: termux 配置修改包
