@@ -1,0 +1,10 @@
+#!/data/data/com.termux/files/usr/bin/sh
+set -e
+
+if [ "$1" = "configure" ];then
+  chsh -s zsh
+  echo "安装完成后记得要启用新会话应用配置"
+fi
+
+exit 0
+

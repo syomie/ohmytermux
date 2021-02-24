@@ -17,5 +17,6 @@ if [[ ! -d $PUTOUT ]];then
     mkdir $PUTOUT
 fi
 chmod 755 "${PACKAGEDIR}/DEBIAN"
+chmod 555 "${PACKAGEDIR}/DEBIAN/postinst"
 echo "准备生成deb包……"
 dpkg -b "$PACKAGEDIR" "${PUTOUT}"
