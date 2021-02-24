@@ -1,5 +1,17 @@
 #### 介绍
 由于一些原因，经常需要清空termux数据重新初始化，而手动配置又比较麻烦，所以将一些资源直接做成安装包，快速配置出(我)需要的termux环境
+#### 使用效果展示
+虚拟键盘扩展了上滑输入。
+
+ALT上滑新建会话/TAB上滑切换到下个会话/CTRL上滑切换到上个会话
+![虚拟键盘1](./doc/image/IMG_PITU_20210224_154620.jpg)
+![虚拟键盘2](./doc/image/IMG_PITU_20210224_154640.jpg)
+![虚拟键盘3](./doc/image/IMG_PITU_20210224_154704.jpg)
+![虚拟键盘4](./doc/image/IMG_PITU_20210224_154722.jpg)
+![全屏图1](./doc/image/Screenshot_20210224_153628_com.termux.jpg)
+![全屏图2](./doc/image/Screenshot_20210224_153723_com.termux.jpg)
+![全屏图3](./doc/image/Screenshot_20210224_153904_com.termux.jpg)
+
 #### 安装说明
 
 1.  添加apt源
