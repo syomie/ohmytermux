@@ -2,9 +2,10 @@
 set -e
 
 if [ "$1" = "configure" ];then
+  tar -Jxf ~/.termux/MonoFonts.tar.xz -C ~/.termux
+  tar -Jxf ~/.oh-my-zsh/omz-git.tar.xz -C ~/.oh-my-zsh
   chsh -s zsh
   echo "请启用新会话应用所有配置(Please enable a new session to apply the configuration)!"
 fi
-
 exit 0
 
