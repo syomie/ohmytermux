@@ -7,7 +7,9 @@ runtime! debian.vim
 " 插入文件头用到的作者
 let g:author="Syomie"
 " 调试/执行程序时的命令行参数
-let g:cliagr="${HOME} OKEY!"
+" 多参数间空格需要反斜杠"\"转义
+" 不能包含"!"
+let g:cliagr="${HOME}\ OKEY"
 
 " 快捷键
 " 自定义leader键 空格键
