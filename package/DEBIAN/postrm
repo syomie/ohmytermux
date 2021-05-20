@@ -3,7 +3,7 @@ set -e
 
 if [ "$1" = "purge" ];then
   if [ -d ~/.oh-my-zsh ];then
-      rm -rf ~/.oh-my-zsh/.g*
+      rm -rf ~/.oh-my-zsh/.git*
   fi
 fi
 exit 0

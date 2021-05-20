@@ -1,0 +1,172 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+#######################################################
+#   Copyright (C) 2021 All rights reserved.
+#   
+#   文件名称：apt-repos.sh
+#   创 建 者：Syomie
+#   创建日期：2021年02月25日
+#   描    述：生成apt仓库
+#
+#######################################################
+usage(){
+    echo "apt-repos [-h] input output [dist] [comp]"
+    echo
+    echo "  必选参数:"
+    echo "    input    存放*.deb文件的文件夹"
+    echo "    output   输出repo树的文件夹<默认为./debian>"
+    echo "  可选参数:"
+    echo "    dist    分发名称。文件被放入out/dists/dist/comp/binary-\$ARCH/"
+    echo "    comp    组件名称。文件被放入out/pool/dist/comp/"
+    echo "    -L  仅保留最新版本"
+    echo "    -s  调用gpg对仓库签名(测试)"
+    echo "    -h  显示帮助并退出"
+    exit
+}
+
+[[ $1 ]] || usage
+
+input=
+out=
+dist=termux
+onlyLast=
+sign=
+comp=non-free
+sha1=
+sha256=
+indeb=
+outdeb=
+
+md5du(){
+    v0=" $(md5sum $1|awk '{print $1}')"
+    v1="$(du -b $1 |sed -n s@${out}/dists/${dist}/@@p )"
+    echo "$v0 $v1" >> ${out}/dists/${dist}/Release
+}
+
+sha1du(){
+    v0=" $(sha1sum $1|awk '{print $1}')"
+    v1="$(du -b $1 |sed -n s@${out}/dists/${dist}/@@p )"
+    echo "$v0 $v1" >> ${out}/dists/${dist}/Release
+}
+
+sha256du(){
+    v0=" $(sha256sum $1|awk '{print $1}')"
+    v1="$(du -b $1 |sed -n s@${out}/dists/${dist}/@@p )"
+    echo "$v0 $v1" >> ${out}/dists/${dist}/Release
+}
+
+while [[ $1 ]]
+do
+    case "$1" in
+        -h) usage ;; 
+        -L) onlyLast=1 ;;
+        -s) sign=1 ;;
+        *) 
+            if [[ -z $input ]] ;then
+                input="$1"
+            elif [[ -z $out ]];then
+                out="$1"
+            elif [[ -z $dist ]];then
+                dist="$1"
+            else
+                comp="$1"
+            fi
+            ;;
+    esac
+    shift
+done
+
+if [[ $input ]];then
+    mkdir -p "${out:=$HOME/termux-deb}/dists/${dist}/${comp}/binary-aarch64"
+    mkdir -p "${out}/pool/${comp}"
+    alldeb=($(find ${input:=ds} -name "*.deb"))
+fi
+for i in ${alldeb[*]}
+do
+    echo "处理:$i"
+    indeb="$i"
+    info="$(dpkg -f $indeb)"
+    packageName="$(echo $info|sed -rn 's/^.*Package:\s?(\S+).*/\1/p')"
+    packageArch="$(echo $info|sed -rn 's/^.*Architecture:\s?(\S+).*/\1/p')"
+    packageVersion="$(echo $info|sed -rn 's/^.*Version:\s?(\S+).*/\1/p')"
+
+    # 只保留最新版本信息
+    if [[ $onlyLast ]];then
+        # 更新资料
+        indeb="$(find $input -name "${packageName}_*_${packageArch}.deb"|sort -Vr|sed -n 1p)"
+        info="$(dpkg -f $indeb)"
+        lastVarsion="$(echo $info|sed -rn 's/^.*Version:\s?(\S+).*/\1/p')"
+    fi
+
+    outdeb="${out}/pool/${comp}/${packageName:0:1}/${packageName}/${packageName}_${packageVersion}_${packageArch}.deb"
+    if [[ -f "$outdeb" ]];then
+        echo "$indeb已存在，跳过复制"
+        continue
+    fi 
+
+    mkdir -p "${out}/pool/${comp}/${packageName:0:1}/${packageName}"
+    [[ -d "${out}/dists/${dist}/${comp}/binary-${packageArch}" ]] ||mkdir -p "${out}/dists/${dist}/${comp}/binary-${packageArch}"
+    cp "$indeb" "$outdeb"
+
+    if [[ $onlyLast && ${packageVersion} != ${lastVarsion} ]];then
+        echo "非最新版本,已跳过"
+        continue
+    fi
+    Size="Size: $(du -b $outdeb|awk '{print $1}')"
+    Filename="Filename: pool/${comp}/${packageName:0:1}/${packageName}/${packageName}_${packageVersion}_${packageArch}.deb"
+    SHA256="SHA256: $(sha256sum $outdeb|awk '{print $1}')"
+    SHA1="SHA1: $(sha1sum $outdeb|awk '{print $1}')"
+    md5="MD5sum: $(md5sum $outdeb|awk '{print $1}')"
+    dpkg -f $outdeb |sed "/^Description/i${Filename}\n${SHA256}\n${SHA1}\n${md5}" >> "${out}/dists/${dist}/${comp}/binary-${packageArch}/Packages"
+    echo  >> "${out}/dists/${dist}/${comp}/binary-${packageArch}/Packages"
+done
+
+echo "Archive: universe
+Version: 1.0
+Component: non-free
+Architecture: aarch64
+Description: 自用微型termux仓库" > ${out}/dists/${dist}/${comp}/binary-aarch64/Release
+gzip -kf ${out}/dists/${dist}/${comp}/binary-{aarch64,all}/Packages 2>/dev/null
+
+echo -e "Suite: universe
+Codename: termux
+Version: 1.0
+Date: $(date -u '+%a, %d %b %Y %X %Z')
+Architectures: aarch64
+Components: ${comp}
+Description: 自用微型termux仓库
+MD5Sum:" > ${out}/dists/${dist}/Release
+
+list=($(find ${out}/dists/${dist}/${comp}/ -name "*" -type f))
+
+for li in ${list[*]}
+do
+    md5du $li
+done
+
+unset li
+echo "SHA1:" >> ${out}/dists/${dist}/Release
+
+for li in ${list[*]}
+do
+    sha1du $li
+done
+unset li
+echo "SHA256:" >> ${out}/dists/${dist}/Release
+
+for li in ${list[*]}
+do
+    sha256du $li
+done
+
+echo -n "准备签名……"
+[[ -f ${out}/dists/${dist}/InRelease ]]&&rm ${out}/dists/${dist}/InRelease
+[[ -f ${out}/dists/${dist}/Release.gpg ]]&&rm ${out}/dists/${dist}/Release.gpg
+if [[ $sign ]];then
+    gpg --clearsign -o ${out}/dists/${dist}/InRelease ${out}/dists/${dist}/Release
+    gpg -abs -o ${out}/dists/${dist}/Release.gpg ${out}/dists/${dist}/Release
+    echo "完成"
+else
+    echo "跳过"
+fi
+unset li indeb packageVersion lastVarsion info input dist out ARCH

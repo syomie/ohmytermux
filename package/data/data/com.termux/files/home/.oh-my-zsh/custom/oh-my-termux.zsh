@@ -12,3 +12,7 @@
 setopt nobeep
 alias q="quit|bye|exit"
 
+function mcdir(){
+    mkdir -p $1
+    cd $1
+}

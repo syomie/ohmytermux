@@ -1,16 +1,24 @@
+oh-my-termux (5) unstable; urgency=medium
+
+  * 调整vim默认配置
+  * 将一些文件夹链接到HOME
+
+
+ -- Syomie <lian1581@qq.com>  Thu, 20 May 2021 12:55:40 UTC
+
 oh-my-termux (4) unstable; urgency=medium
 
   * 修复omz无法更新问题
   * 修复vim携带多参数执行问题
   * 压缩文件
 
- -- Syomie <lian1581@qq.com>  Mon Mar 8 19:46:49 CST 2021
+ -- Syomie <lian1581@qq.com>  Tue, 09 Mar 2021 01:46:49 UTC
 
 oh-my-termux (3) unstable; urgency=medium
 
   * Resolves #3 ,Resolves #4
 
- -- Syomie <lian1581@qq.com>  Wed Feb 24 21:23:38 CST 2021
+ -- Syomie <lian1581@qq.com>  Thu, 25 Feb 2021 03:23:38 UTC
 
 oh-my-termux (2) unstable; urgency=medium
 
@@ -19,10 +27,10 @@ oh-my-termux (2) unstable; urgency=medium
   * 安装并配置vim
   * 配置syomie源仓库
 
- -- Syomie <lian1581@qq.com>  Tue Feb 23 21:32:25 CST 2021
+ -- Syomie <lian1581@qq.com>  Wed, 24 Feb 2021 03:32:25 UTC
 
 oh-my-termux (1) unstable; urgency=medium
 
   * Add Virtual Keyboard
 
- -- Syomie <lian1581@qq.com>  Tue Feb 23 14:23:02 CST 2021
+ -- Syomie <lian1581@qq.com>  Tue, 23 Feb 2021 20:23:02 UTC

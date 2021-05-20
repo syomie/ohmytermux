@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#######################################################
+#   Copyright (C) 2021 All rights reserved.
+#   
+#   文件名称：termux-init
+#   创 建 者：Syomie
+#   创建日期：2021年05月09日
+#   描    述：初始化termux
+#
+#######################################################
+
+# 获取存储权限
+if [[ ! -d ~/storage/ ]]; then
+    echo "您需要允许权限或者使用Ctrl+C终止后续任务"
+    am broadcast --user 0 \
+        --es com.termux.app.reload_style storage \
+        -a com.termux.app.reload_style com.termux > /dev/null
+fi
+
+# 等待授权完成
+while [[ ! -d ~/storage ]]
+do
+    sleep 1
+done
+
+cd
+tryln(){
+if  [[ -d $1 && ! -d $2 ]];then
+    ln -s $1 $2
+fi
+
+}
+# 生成一些常用文件夹的快捷方式
+
+# QQ下载文件夹
+if  [[ -d storage/shared/Android/data/com.tencent.mobileqq/Tencent/QQfile_recv && ! -d qqfile ]];then
+    ln -s storage/shared/Android/data/com.tencent.mobileqq/Tencent/QQfile_recv qqfile
+fi
+
+# AIDE文件夹
+if  [[ -d storage/shared/AppProjects && ! -d aide ]];then
+    ln -s storage/shared/AppProjects aide
+fi
+
+# termux文件夹(个人习惯)
+if  [[ -d storage/shared/termux && ! -d etx ]];then
+    ln -s storage/shared/termux etx
+fi
+

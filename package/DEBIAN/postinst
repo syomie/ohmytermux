@@ -2,10 +2,11 @@
 set -e
 
 if [ "$1" = "configure" ];then
-  tar -Jxf ~/.termux/MonoFonts.tar.xz -C ~/.termux
-  tar -Jxf ~/.oh-my-zsh/omz-git.tar.xz -C ~/.oh-my-zsh
-  chsh -s zsh
-  echo "请启用新会话应用所有配置(Please enable a new session to apply the configuration)!"
+    tar -Jxf ~/.termux/MonoFonts.tar.xz -C ~/.termux
+    tar -Jxf ~/.oh-my-zsh/omz-git.tar.xz -C ~/.oh-my-zsh
+    t-init
+    termux-reload-settings
+    chsh -s zsh
+    echo "您可能需要重启Termux才能完整应用软键盘(You may need to restart Termux to fully apply the softkeys)"
 fi
-exit 0
 

@@ -16,7 +16,11 @@ ALT上滑新建会话/TAB上滑切换到下个会话/CTRL上滑切换到上个�
 
 1.  添加apt源
     ```
-    echo "deb [trusted=true] https://www.syomie.fun/termux-deb/ termux non-free" > ${PREFIX}/etc/apt/sources.list.d/syomie.list
+    ========导入源，一行一行来=======
+    pkg install gnupg -y
+#导入公钥
+    apt-key adv --recv-keys DD2366C3F5BD1344
+    echo "deb https://www.syomie.fun/termux-deb/ termux non-free" > $PREFIX/etc/apt/sources.list.d/syomie.list
     apt update
     ```
     关于该源见下方附加说明。
@@ -32,10 +36,14 @@ ALT上滑新建会话/TAB上滑切换到下个会话/CTRL上滑切换到上个�
 
 #### 关于syomie软件源
 * 这是一个自用的软件源。
-* 本源(包括软件包)目前没有任何签名/认证。
 * 本源不提供任何保障，亦不承担任何使用该源造成的后果(责任)。
-* 目前只在termux可用，并且不能替代官方源(并非镜像源，这里只有几个包，并且不打算在线上保留旧版本软件包，它的空间太小了)
+* 目前只在termux可用，并且不能替代官方源(非镜像)
 * 包含部分来自网络，或从网络收集并由我重新打包的deb软件包，如果您发现错误/更新/侵权/上传其他包裹或其他问题，请提交问题反馈或<a href="mailto:lian1581@qq.com">发送邮件</a>联系。
-* 待续……
 
-#### 附: [syomie源软件包列表](./packagelist.md)
+#### 附:syomie源软件包列表
+* openjdk-11-jdk/11.0.10
+* oh-my-termux
+* sdk-tools/3.0
+* build-tools-r28/1.0.1
+* build-tools-r29/1.0.0
+* gradle/6.8.3

@@ -6,19 +6,23 @@ runtime! debian.vim
 
 " 插入文件头用到的作者
 let g:author="Syomie"
+let g:email="lian1581@qq.com"
+
 " 调试/执行程序时的命令行参数
 " 多参数间空格需要反斜杠"\"转义
 " 不能包含"!"
 let g:cliagr="${HOME}\ OKEY"
 
+
 " 快捷键
 " 自定义leader键 空格键
+let mapleader="\<space>"
 " <leader>bn :bn
 " 映射全选+复制 ctrl+a
 " 选中状态下 Ctrl+c 复制
-" leader+1去空行
-" leader+2比较文件
-" leader+f+l格式化
+" leader+1    去空行
+" leader+2    比较文件
+" leader+f+l  格式化
 " 新建标签 <M-2> :tabnew<CR>
 " 按空格+5编译运行(支持C,C++,Java,Shell)
 " 按空格+6调试运行(支持C,C++,Java,Shell)
@@ -82,8 +86,6 @@ set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 
-" 自定义功能键 空格键
-let mapleader="\<space>"
 nmap <leader>w :w!<CR>
 nmap <leader>bn :bn<CR>
 " 映射全选+复制 ctrl+a
@@ -148,8 +150,8 @@ set expandtab
 set smarttab
 " 历史记录数
 set history=1000
-" 生成临时文件
-set backup
+" 不备份文件
+set nobackup
 set swapfile
 set incsearch
 " 行内替换
@@ -192,25 +194,27 @@ func SetFileHead_all()
     call append(line("."), " *")
     call append(line("."), " *   描    述：")
     call append(line("."), " *   创建日期：".strftime("%Y年%m月%d日"))
-    call append(line("."), " *   创 建 者：".g:author)
+    call append(line("."), " *   作    者：".g:author)
     call append(line("."), " *   文件名称：".expand("%:t"))
     call append(line("."), " *   ")
-    call append(line("."),   " *   Copyright (C) ".strftime("%Y")." All rights reserved.")
+    call append(line("."), " *   All rights reserved.")
+    call append(line("."), " *   Copyright (C) ".strftime("%Y")." ".g:author." <".g:email.">")
     normal Gk0
 endfunc
 " 加入shell,Makefile文件头
 func SetFileHead_sh()
-    call setline(3, "#################################################################")
-    call setline(4, "#   Copyright (C) ".strftime("%Y")." All rights reserved.")
-    call setline(5, "#   ")
-    call setline(6, "#   文件名称：".expand("%:t"))
-    call setline(7, "#   创 建 者：".g:author)
-    call setline(8, "#   创建日期：".strftime("%Y年%m月%d日"))
-    call setline(9, "#   描    述：")
-    call setline(10, "#")
-    call setline(11, "#################################################################")
-    call setline(12, "")
+    call setline(3, "#######################################################")
+    call setline(4, "#   Copyright (C) ".strftime("%Y")." ".g:author." <".g:email.">")
+    call setline(5, "#   All rights reserved.")
+    call setline(6, "#   ")
+    call setline(7, "#   文件名称：".expand("%:t"))
+    call setline(8, "#   作    者：".g:author)
+    call setline(9, "#   创建日期：".strftime("%Y年%m月%d日"))
+    call setline(10, "#   描    述：")
+    call setline(11, "#")
+    call setline(12, "#######################################################")
     call setline(13, "")
+    call setline(14, "")
 endfunc
 
 " 插入文件头
@@ -254,19 +258,6 @@ func SetFileHead()
             call append(line("."), "}")
             call append(line("."), "")
             call append(line("."), "int main(int argc,char* argv[]){")
-            call append(line("."), "")
-            call append(line("."), "}")
-            call append(line("."), "    return hash_(p);")
-            call append(line("."), "constexpr unsigned long long operator \"\" _hash(char const* p, size_t){")
-            call append(line("."), "// 编译时字符串＋后缀_hash(\"abc\"_hash) 将调用hash_转换为数值常量，可用于case判断")
-            call append(line("."), "}")
-            call append(line("."), "    return *str ? hash_(str+1, (*str ^ last_value) * prime) : last_value;")
-            call append(line("."), "constexpr hash_t hash_(char const* str, hash_t last_value = basis){")
-            call append(line("."), "")
-            call append(line("."), "constexpr hash_t basis = 0xCBF29CE484222325ull;")
-            call append(line("."), "constexpr hash_t prime = 0x100000001B3ull;")
-            call append(line("."), "")
-            call append(line("."), "typedef uint64_t hash_t;")
             call append(line("."), "using namespace std;")
             call append(line("."), "")
             call append(line("."), "#include <cstdlib>")
