@@ -1,9 +1,9 @@
-#!/data/data/com.termux/files/usr/bin/sh
+#!/data/data/com.termux/files/usr/bin/bash
 set -e
 
 if [ "$1" = "configure" ];then
     tar -Jxf ~/.termux/MonoFonts.tar.xz -C ~/.termux
-    tar -Jxf ~/.oh-my-zsh/omz-git.tar.xz -C ~/.oh-my-zsh
+   [ -d ~/.oh-my-zsh/.git ] || tar -Jxf ~/.oh-my-zsh/omz-git.tar.xz -C ~/.oh-my-zsh
     t-init
     termux-reload-settings
     chsh -s zsh
