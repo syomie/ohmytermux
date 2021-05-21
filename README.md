@@ -14,11 +14,10 @@ ALT上滑新建会话/TAB上滑切换到下个会话/CTRL上滑切换到上个�
 
 #### 安装说明
 
-1.  添加apt源
+1.  添加apt源,一行一行来
     ```
-    ========导入源，一行一行来=======
     pkg install gnupg -y
-#导入公钥
+    # 导入公钥
     apt-key adv --recv-keys DD2366C3F5BD1344
     echo "deb https://www.syomie.fun/termux-deb/ termux non-free" > $PREFIX/etc/apt/sources.list.d/syomie.list
     apt update
@@ -31,7 +30,6 @@ ALT上滑新建会话/TAB上滑切换到下个会话/CTRL上滑切换到上个�
 #### 目录结构说明
 * ./package          最终需要打包的目录
 * ./package/data     软件包内容
-* ./paxkage/DEBIAN   软件包控制信息目录
 
 
 #### 关于syomie软件源
